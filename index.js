@@ -13,7 +13,11 @@ app.get('/sc', (req, res) => {
   } else {
     console.log(req.query.url);
     (async () => {
-      const browser = await puppeteer.launch({headless: true});
+      const browser = await puppeteer.launch({
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+        //executablePath: '/usr/bin/chromium'  //docker以外はコメントアウト
+        });
       try {
         const page = await browser.newPage();
         await Promise.all([
