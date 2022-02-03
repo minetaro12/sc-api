@@ -4,12 +4,12 @@ const express = require('express');
 const app = express();
 
 app.get('/', (req, res) => {
-  res.send('Usage: /sc?url=http://example.com');
+  res.send('Usage: /sc?url=http://example.com<br>Mobile emulate: /sc?url=http://example.com&m=1');
 })
 
 app.get('/sc', (req, res) => {
   if( !req.query.url ) {
-    res.status(400).send('Usage: /sc?url=http://example.com');
+    res.status(400).send('Usage: /sc?url=http://example.com<br>Mobile emulate: /sc?url=http://example.com&m=1');
   } else {
     console.log(req.query.url);
     (async () => {
@@ -20,13 +20,16 @@ app.get('/sc', (req, res) => {
         });
       try {
         const page = await browser.newPage();
+        if( req.query.m === '1' ) {
+          await page.emulate(puppeteer.devices['Pixel 4']);
+        };
         await Promise.all([
           page.waitForNavigation({waitUntil: ['load', 'networkidle2']}),
           page.goto(req.query.url)
         ]);
-        var data = await page.screenshot({type: 'png', fullPage: true});
+        var data = await page.screenshot({type: 'jpeg', fullPage: true});
         await browser.close();
-        res.type('png');
+        res.type('jpeg');
         res.send(data);
       } catch(e) {
         console.log('Error');
