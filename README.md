@@ -1,6 +1,6 @@
 # sc-api
 
-指定されたURLのスクリーンショットを返します
+指定されたURLのスクリーンショットを返します（jpeg）
 
 `yarn install` 依存関係のインストール
 
@@ -8,9 +8,9 @@
 
 `PORT=9000 yarn start` ポート9000で起動
 
-※Dockerを使う場合
+## Dockerを使う場合
 
-Dockerを使う場合は`index.js`の18,19行目を下のように変更します
+Dockerを使う場合は`index.js`の21,22行目を下のように変更します
 ```
 args: ['--no-sandbox', '--disable-setuid-sandbox'],
 executablePath: '/usr/bin/chromium'  //docker以外はコメントアウト
@@ -23,8 +23,14 @@ executablePath: '/usr/bin/chromium'  //docker以外はコメントアウト
 ## 使い方
 
 ```
-wget localhost:8000/sc?url=http://example.com
-curl localhost:8000/sc?url=http://example.com -o sc.png
+wget 'localhost:8000/sc?url=http://example.com' -O sc.jpg
+curl 'localhost:8000/sc?url=http://example.com' -o sc.jpg
+
+#モバイル表示
+curl 'localhost:8000/sc?url=http://example.com&m=1' -o mobile.jpg
+
+#ダークテーマ表示
+curl 'localhost:8000/sc?url=http://example.com&d=1' -o dark.jpg
 ```
 
 ブラウザでアクセスすることもできます
