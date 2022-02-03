@@ -2,7 +2,9 @@ const port = process.env.PORT || 8000
 const puppeteer = require('puppeteer');
 const express = require('express');
 const app = express();
-const usagetext = 'Usage: /sc?url=http://example.com<br>Mobile emulate: /sc?url=http://example.com&m=1';
+const usagetext = 'Usage: /sc?url=http://example.com<br>\
+  Mobile emulate: /sc?url=http://example.com&m=1<br>\
+  Dark mode emulate: /sc?url=http://example.com&d=1';
 
 app.get('/', (req, res) => {
   res.send(usagetext);
@@ -23,6 +25,11 @@ app.get('/sc', (req, res) => {
         const page = await browser.newPage();
         if( req.query.m === '1' ) {
           await page.emulate(puppeteer.devices['Pixel 4']);
+        };
+        if( req.query.d === '1' ) {
+          await page.emulateMediaFeatures([
+            { name: "prefers-color-scheme", value: "dark" },
+          ]);
         };
         await Promise.all([
           page.waitForNavigation({waitUntil: ['load', 'networkidle2']}),
