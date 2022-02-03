@@ -15,7 +15,7 @@ app.get('/sc', (req, res) => {
     (async () => {
       const browser = await puppeteer.launch({
         headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
+        args: ['--no-sandbox', '--disable-setuid-sandbox']//,
         //executablePath: '/usr/bin/chromium'  //docker以外はコメントアウト
         });
       try {
