@@ -26,8 +26,8 @@ app.get('/sc', (req, res) => {
         	'--no-sandbox',
         	'--no-zygote',
         	'--single-process'
-        ]//,
-        //executablePath: '/usr/bin/chromium'  //docker以外はコメントアウト
+        ],
+        executablePath: '/usr/bin/chromium'  //docker以外はコメントアウト
         });
       try {
         const page = await browser.newPage();
