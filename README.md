@@ -10,9 +10,9 @@
 
 ## Dockerを使う場合
 
-Dockerを使う場合は`index.js`の21,22行目を下のように変更します
+Dockerを使う場合は`index.js`の29,30行目を下のように変更します
 ```
-args: ['--no-sandbox', '--disable-setuid-sandbox'],
+],
 executablePath: '/usr/bin/chromium'  //docker以外はコメントアウト
 ```
 
