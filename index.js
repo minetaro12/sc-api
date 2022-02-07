@@ -35,7 +35,7 @@ app.get('/sc', (req, res) => {
           page.waitForNavigation({waitUntil: ['load', 'networkidle2']}),
           page.goto(req.query.url)
         ]);
-        var data = await page.screenshot({type: 'jpeg', fullPage: true});
+        let data = await page.screenshot({type: 'jpeg', fullPage: true});
         await browser.close();
         res.type('jpeg');
         res.send(data);
