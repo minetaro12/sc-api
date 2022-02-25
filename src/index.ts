@@ -1,8 +1,9 @@
 const port = process.env.PORT || 8000
-const puppeteer = require('puppeteer');
-const express = require('express');
+import puppeteer from 'puppeteer';
+import express from 'express';
 const app = express();
-const usagetext = 'Usage: /sc?url=http://example.com<br>\
+
+const usagetext: string = 'Usage: /sc?url=http://example.com<br>\
   Mobile emulate: /sc?url=http://example.com&m=1<br>\
   Dark mode emulate: /sc?url=http://example.com&d=1';
 
@@ -10,8 +11,8 @@ app.get('/', (req, res) => {
   res.send(usagetext);
 })
 
-app.get('/sc', (req, res) => {
-  if( !req.query.url ) {
+app.get('/sc', (req: any, res) => {
+  if(!req.query.url) {
     res.status(400).send(usagetext);
   } else {
     console.log(req.query.url);
@@ -31,11 +32,15 @@ app.get('/sc', (req, res) => {
             { name: "prefers-color-scheme", value: "dark" },
           ]);
         };
-        await Promise.all([
-          page.waitForNavigation({waitUntil: ['load', 'networkidle2']}),
-          page.goto(req.query.url)
-        ]);
-        let data = await page.screenshot({type: 'jpeg', fullPage: true});
+        if (typeof req.query.url !== 'undefined') {
+          await Promise.all([
+            page.waitForNavigation({waitUntil: ['load', 'networkidle2']}),
+            page.goto(req.query.url)
+          ]);
+        } else {
+          throw new Error;
+        };
+        const data = await page.screenshot({type: 'jpeg', fullPage: true});
         await browser.close();
         res.type('jpeg');
         res.send(data);
@@ -49,5 +54,5 @@ app.get('/sc', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log('Server listening on port ' + port)
+  console.log(`Server listening on port ${port}`)
 });
