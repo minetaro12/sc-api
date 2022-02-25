@@ -18,13 +18,12 @@ RUN apk add --no-cache chromium && \
 WORKDIR /server
 
 #ファイルのコピー
-COPY ./index.js /server/
-COPY ./package.json /server/
-COPY ./yarn.lock /server/
+COPY ./ /server/
 
 #依存関係のインストール
 RUN echo "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=TRUE" > .npmrc && \
     yarn install && \
+    yarn build && \
     yarn cache clean && \
     rm -rf /root/.npm
 
