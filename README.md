@@ -4,13 +4,15 @@
 
 `yarn install` 依存関係のインストール
 
+`yarn build` ビルド
+
 `yarn start` ポート8000で起動
 
 `PORT=9000 yarn start` ポート9000で起動
 
 ## Dockerを使う場合
 
-Dockerを使う場合は`index.js`の21,22行目を下のように変更します
+Dockerを使う場合は`src/index.ts`の22,23行目を下のように変更します
 ```
 args: ['--no-sandbox', '--disable-setuid-sandbox'],
 executablePath: '/usr/bin/chromium'  //docker以外はコメントアウト
