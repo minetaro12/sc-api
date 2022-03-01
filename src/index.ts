@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
   res.send(usagetext);
 })
 
-app.get('/sc', (req: any, res) => {
+app.get('/sc', (req, res) => {
   if(!req.query.url) {
     res.status(400).send(usagetext);
   } else {
@@ -35,7 +35,7 @@ app.get('/sc', (req: any, res) => {
         if (typeof req.query.url !== 'undefined') {
           await Promise.all([
             page.waitForNavigation({waitUntil: ['load', 'networkidle2']}),
-            page.goto(req.query.url)
+            page.goto(`${req.query.url}`)
           ]);
         } else {
           throw new Error;
